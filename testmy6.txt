@@ -1,0 +1,1635 @@
+  if game:getservice("coregui"):findfirstchild("best xem chùa") then 
+game:getservice("coregui"):findfirstchild("best xem chùa"):destroy()
+end
+
+
+local localplayer = game:getservice("players").localplayer
+local virtualuser = game:getservice('virtualuser')
+function chichdiem(cfgo) local distance = (cfgo.position - game.players.localplayer.character.humanoidrootpart.position).magnitude local tween_s = game:service"tweenservice"
+  local info = tweeninfo.new((game:getservice("players")["localplayer"].character.humanoidrootpart.position - cfgo.position).magnitude/360, enum.easingstyle.linear)
+   if distance < 50 then game.players.localplayer.character.humanoidrootpart.cframe = cfgo    end
+   local tween, err = pcall(function()  tween = tween_s:create(game.players.localplayer.character["humanoidrootpart"], info, {cframe = cfgo})
+    tween:play()  end) end
+local placeid = game.placeid if placeid == 2753915549 then oldworld = true elseif placeid == 4442272183 then newworld = true elseif placeid == 7449423635 then threeworld = true bf = true end
+--loading game buoi
+ if not game:isloaded() then   
+repeat game.loaded:wait(0.2)  wait(10)
+until game:isloaded() 
+repeat wait() until game.players.localplayer
+repeat wait() until game.players.localplayer.character
+repeat wait() until game:getservice("players").localplayer.playergui:findfirstchild("loadingscreen") == false
+end
+-----
+-- function
+function infab()
+        if getgenv().infability then
+            if not game:getservice("players").localplayer.character.humanoidrootpart:findfirstchild("agility") then
+                local inf = instance.new("particleemitter")
+                inf.acceleration = vector3.new(0,0,0)
+                inf.archivable = true
+                inf.drag = 20
+                inf.emissiondirection = enum.normalid.top
+                inf.enabled = true
+                inf.lifetime = numberrange.new(0,0)
+                inf.lightinfluence = 0
+                inf.lockedtopart = true
+                inf.name = "agility"
+                inf.rate = 500
+                local numberkeypoints2 = {
+                    numbersequencekeypoint.new(0, 0);
+                    numbersequencekeypoint.new(1, 4); 
+                }
+                inf.size = numbersequence.new(numberkeypoints2)
+                inf.rotspeed = numberrange.new(9999, 99999)
+                inf.rotation = numberrange.new(0, 0)
+                inf.speed = numberrange.new(30, 30)
+                inf.spreadangle = vector2.new(0,0,0,0)
+                inf.texture = ""
+                inf.velocityinheritance = 0
+                inf.zoffset = 2
+                inf.transparency = numbersequence.new(0)
+                inf.color = colorsequence.new(color3.fromrgb(0,0,0),color3.fromrgb(0,0,0))
+                inf.parent = game:getservice("players").localplayer.character.humanoidrootpart
+            end
+        else
+            if game:getservice("players").localplayer.character.humanoidrootpart:findfirstchild("agility") then
+                game:getservice("players").localplayer.character.humanoidrootpart:findfirstchild("agility"):destroy()
+            end
+        end
+    end
+    
+    local localplayer = game:getservice'players'.localplayer
+    local originalstam = localplayer.character.energy.value
+function updateespplayer()
+		for i,v in pairs(game:getservice'players':getchildren()) do
+			pcall(function()
+				if not isnil(v.character) then
+					if getgenv().espplayer then
+						if not isnil(v.character.head) and not v.character.head:findfirstchild('nameesp'..number) then
+							local bill = instance.new('billboardgui',v.character.head)
+							bill.name = 'nameesp'..number
+							bill.extentsoffset = vector3.new(0, 1, 0)
+							bill.size = udim2.new(1,200,1,30)
+							bill.adornee = v.character.head
+							bill.alwaysontop = true
+							local name = instance.new('textlabel',bill)
+							name.font = "gothambold"
+							name.fontsize = "size14"
+							name.textwrapped = true
+							name.text = (v.name ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.character.head.position).magnitude/3) ..' m')
+							name.size = udim2.new(1,0,1,0)
+							name.textyalignment = 'top'
+							name.backgroundtransparency = 1
+							name.textstroketransparency = 0.5
+							if v.team == game.players.localplayer.team then
+								name.textcolor3 = color3.new(0,255,0)
+							else
+								name.textcolor3 = color3.new(255,0,0)
+							end
+						else
+							v.character.head['nameesp'..number].textlabel.text = (v.name ..' | '.. round((game:getservice('players').localplayer.character.head.position - v.character.head.position).magnitude/3) ..' m\nhealth : ' .. round(v.character.humanoid.health*100/v.character.humanoid.maxhealth) .. '%')
+						end
+					else
+						if v.character.head:findfirstchild('nameesp'..number) then
+							v.character.head:findfirstchild('nameesp'..number):destroy()
+						end
+					end
+				end
+			end)
+		end
+	end
+    
+    function updateislandesp() 
+        for i,v in pairs(game:getservice("workspace")["_worldorigin"].locations:getchildren()) do
+            pcall(function()
+                if getgenv().islandesp then 
+                    if v.name ~= "sea" then
+                        if not v:findfirstchild('nameesp') then
+                            local bill = instance.new('billboardgui',v)
+                            bill.name = 'nameesp'
+                            bill.extentsoffset = vector3.new(0, 1, 0)
+                            bill.size = udim2.new(1,200,1,30)
+                            bill.adornee = v
+                            bill.alwaysontop = true
+                            local name = instance.new('textlabel',bill)
+                            name.font = "gothambold"
+                            name.fontsize = "size14"
+                            name.textwrapped = true
+                            name.size = udim2.new(1,0,1,0)
+                            name.textyalignment = 'top'
+                            name.backgroundtransparency = 1
+                            name.textstroketransparency = 0.5
+                            name.textcolor3 = color3.fromrgb(80, 245, 245)
+                        else
+                            v['nameesp'].textlabel.text = (v.name ..'   \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                        end
+                    end
+                else
+                    if v:findfirstchild('nameesp') then
+                        v:findfirstchild('nameesp'):destroy()
+                    end
+                end
+            end)
+        end
+    end
+    
+    function updatechestesp() 
+        for i,v in pairs(game:getservice("workspace"):getchildren()) do
+            pcall(function()
+                if string.find(v.name,"chest") then
+                    if getgenv().chestesp then
+                        if string.find(v.name,"chest") then
+                            if not v:findfirstchild('nameesp'..number) then
+                                local bill = instance.new('billboardgui',v)
+                                bill.name = 'nameesp'..number
+                                bill.extentsoffset = vector3.new(0, 1, 0)
+                                bill.size = udim2.new(1,200,1,30)
+                                bill.adornee = v
+                                bill.alwaysontop = true
+                                local name = instance.new('textlabel',bill)
+                                name.font = "gothambold"
+                                name.fontsize = "size14"
+                                name.textwrapped = true
+                                name.size = udim2.new(1,0,1,0)
+                                name.textyalignment = 'top'
+                                name.backgroundtransparency = 1
+                                name.textstroketransparency = 0.5
+                                name.textcolor3 = color3.fromrgb(0, 255, 250)
+                            if v.name == "chest1" then
+                                name.text = ("chest 1" ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                            end
+                            if v.name == "chest2" then
+                                name.text = ("chest 2" ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                            end
+                        if v.name == "chest3" then
+                            name.text = ("chest 3" ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                        end
+                        else
+                            v['nameesp'..number].textlabel.text = (v.name ..'   \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                        end
+                    end
+                else
+                    if v:findfirstchild('nameesp'..number) then
+                    v:findfirstchild('nameesp'..number):destroy()
+                    end
+                end
+                end
+            end)
+        end
+    end
+    
+    function updatebfesp() 
+        for i,v in pairs(game:getservice("workspace"):getchildren()) do
+            pcall(function()
+                if getgenv().devilfruitesp then
+                    if string.find(v.name, "fruit") then   
+                        if not v.handle:findfirstchild('nameesp'..number) then
+                            local bill = instance.new('billboardgui',v.handle)
+                            bill.name = 'nameesp'..number
+                            bill.extentsoffset = vector3.new(0, 1, 0)
+                            bill.size = udim2.new(1,200,1,30)
+                            bill.adornee = v.handle
+                            bill.alwaysontop = true
+                            local name = instance.new('textlabel',bill)
+                            name.font = "gothambold"
+                            name.fontsize = "size14"
+                            name.textwrapped = true
+                            name.size = udim2.new(1,0,1,0)
+                            name.textyalignment = 'top'
+                            name.backgroundtransparency = 1
+                            name.textstroketransparency = 0.5
+                            name.textcolor3 = color3.fromrgb(255, 0, 0)
+                            name.text = (v.name ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.handle.position).magnitude/3) ..' m')
+                        else
+                            v.handle['nameesp'..number].textlabel.text = (v.name ..'   \n'.. round((game:getservice('players').localplayer.character.head.position - v.handle.position).magnitude/3) ..' m')
+                        end
+                    end
+                else
+                    if v.handle:findfirstchild('nameesp'..number) then
+                        v.handle:findfirstchild('nameesp'..number):destroy()
+                        end
+                end
+            end)
+        end
+    end
+    
+    function updatefloweresp() 
+        for i,v in pairs(game:getservice("workspace"):getchildren()) do
+            pcall(function()
+                if v.name == "flower2" or v.name == "flower1" then
+                    if getgenv().floweresp then 
+                        if not v:findfirstchild('nameesp'..number) then
+                            local bill = instance.new('billboardgui',v)
+                            bill.name = 'nameesp'..number
+                            bill.extentsoffset = vector3.new(0, 1, 0)
+                            bill.size = udim2.new(1,200,1,30)
+                            bill.adornee = v
+                            bill.alwaysontop = true
+                            local name = instance.new('textlabel',bill)
+                            name.font = "gothambold"
+                            name.fontsize = "size14"
+                            name.textwrapped = true
+                            name.size = udim2.new(1,0,1,0)
+                            name.textyalignment = 'top'
+                            name.backgroundtransparency = 1
+                            name.textstroketransparency = 0.5
+                            name.textcolor3 = color3.fromrgb(255, 0, 0)
+                        if v.name == "flower1" then 
+                            name.text = ("blue flower" ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                            name.textcolor3 = color3.fromrgb(255, 0, 0)
+                        end
+                        if v.name == "flower2" then
+                            name.text = ("red flower" ..' \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                            name.textcolor3 = color3.fromrgb(255, 0, 0)
+                        end
+                    else
+                        v['nameesp'..number].textlabel.text = (v.name ..'   \n'.. round((game:getservice('players').localplayer.character.head.position - v.position).magnitude/3) ..' m')
+                    end
+                    else
+                        if v:findfirstchild('nameesp'..number) then
+                            v:findfirstchild('nameesp'..number):destroy()
+                        end
+                    end
+                end   
+            end)
+        end
+    end
+    
+function autohaki()
+        if not game:getservice("players").localplayer.character:findfirstchild("hasbuso") then
+            game:getservice("replicatedstorage").remotes.commf_:invokeserver("buso")
+        end
+    end
+function fly()
+local mouse=game.players.localplayer:getmouse''
+		localplayer=game.players.localplayer
+		game.players.localplayer.character:waitforchild("humanoidrootpart")
+		local torso = game.players.localplayer.character.humanoidrootpart
+		local speedset=25
+		local keys={a=false,d=false,w=false,s=false}
+		local e1
+		local e2
+		local function start()
+			local pos = instance.new("bodyposition",torso)
+			local gyro = instance.new("bodygyro",torso)
+			pos.name="epixpos"
+			pos.maxforce = vector3.new(math.huge, math.huge, math.huge)
+			pos.position = torso.position
+			gyro.maxtorque = vector3.new(9e9, 9e9, 9e9)
+			gyro.cframe = torso.cframe
+			repeat
+				wait()
+				localplayer.character.humanoid.platformstand=true
+				local new=gyro.cframe - gyro.cframe.p + pos.position
+				if not keys.w and not keys.s and not keys.a and not keys.d then
+					speed=1
+				end
+				if keys.w then
+					new = new + workspace.currentcamera.coordinateframe.lookvector * speed
+					speed=speed+speedset
+				end
+				if keys.s then
+					new = new - workspace.currentcamera.coordinateframe.lookvector * speed
+					speed=speed+speedset
+				end
+				if keys.d then
+					new = new * cframe.new(speed,0,0)
+					speed=speed+speedset
+				end
+				if keys.a then
+					new = new * cframe.new(-speed,0,0)
+					speed=speed+speedset
+				end
+				if speed>speedset then
+					speed=speedset
+				end
+					pos.position=new.p
+				if keys.w then
+					gyro.cframe = workspace.currentcamera.coordinateframe*cframe.angles(-math.rad(speed*15),0,0)
+				elseif keys.s then
+					gyro.cframe = workspace.currentcamera.coordinateframe*cframe.angles(math.rad(speed*15),0,0)
+				else
+					gyro.cframe = workspace.currentcamera.coordinateframe
+				end
+			until not fly
+			if gyro then 
+				gyro:destroy() 
+			end
+			if pos then 
+				pos:destroy() 
+			end
+			flying=false
+			localplayer.character.humanoid.platformstand=false
+			speed=0
+		end
+		e1=mouse.keydown:connect(function(key)
+			if not torso or not torso.parent then 
+				flying=false e1:disconnect() e2:disconnect() return 
+			end
+			if key=="w" then
+				keys.w=true
+			elseif key=="s" then
+				keys.s=true
+			elseif key=="a" then
+				keys.a=true
+			elseif key=="d" then
+				keys.d=true
+			end
+		end)
+		e2=mouse.keyup:connect(function(key)
+			if key=="w" then
+				keys.w=false
+			elseif key=="s" then
+				keys.s=false
+			elseif key=="a" then
+				keys.a=false
+			elseif key=="d" then
+				keys.d=false
+			end
+		end)
+		start()
+	end
+function racev4()
+local replicatedstorage = game:getservice("replicatedstorage")
+
+local player = game:getservice("players").localplayer
+
+local argsdash = {
+	character = game.players.localplayer.character,
+	cframe = game.players.localplayer.character.humanoidrootpart.cframe,
+	color1 = color3.fromrgb(102, 255, 153),
+	color2 = color3.fromrgb(102, 255, 153),
+	color3 = color3.fromrgb(102, 255, 153),
+
+}
+
+local old; old = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
+	if self.name == "comme" then
+		local args = {...}
+
+		if args[1] == "dodge" then
+player.character.humanoid:loadanimation(replicatedstorage.util.anims.storage["2"].racetransform):play()
+         
+          
+			coroutine.wrap (function() wait(1) require(replicatedstorage.effect.container.racetransformation.main)(argsdash) end)()
+            
+				end
+	end
+	
+	return old(self, ...)
+end))
+end
+
+function nododgecool()
+		if nododgecool then
+			for i,v in next, getgc() do
+				if game.players.localplayer.character.dodge then
+					if typeof(v) == "function" and getfenv(v).script == game.players.localplayer.character.dodge then
+						for i2,v2 in next, getupvalues(v) do
+							if tostring(v2) == "0.4" then
+								repeat wait(.1)
+									setupvalue(v,i2,0)
+								until not nododgecool
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+function killaura()
+for i,v in pairs(game.workspace.enemies:getdescendants()) do
+                if v:findfirstchild("humanoid") and v:findfirstchild("humanoidrootpart") and v.humanoid.health > 0 then
+                    pcall(function()
+                        repeat task.wait()
+                            sethiddenproperty(game.players.localplayer, "simulationradius", math.huge)
+                            v.humanoid.health = 0
+                            v.humanoidrootpart.cancollide = false
+                            v.humanoidrootpart.size = vector3.new(500,500,500)
+                            v.humanoidrootpart.transparency = 1
+                        until not killaura or not getgenv().autoraid or not raidsuperhuman or not v.parent or v.humanoid.health <= 0
+                    end)
+                end
+            end
+end
+function equipweapon(tool)  if game.players.localplayer.backpack:findfirstchild(tool) then   local tool_s = game.players.localplayer.backpack:findfirstchild(tool)    wait() game.players.localplayer.character.humanoid:equiptool(tool_s) end end
+function click() game:getservice'virtualuser':capturecontroller() game:getservice'virtualuser':button1down(vector2.new(1280, 672))end
+function checkquest() local mylevel = game.players.localplayer.data.level.value
+if oldworld then
+        if mylevel == 1 or mylevel <= 9 then 
+            ms = "bandit [lv. 5]"
+            naemquest = "banditquest1"
+            levelquest = 1
+            namemon = "bandit"
+            cframequest = cframe.new(1061.66699, 16.5166187, 1544.52905)
+            posquest = vector3.new(1061.66699, 16.5166187, 1544.52905)
+            cframemon = cframe.new(1199.31287, 52.2717781, 1536.91516)
+            posmon = vector3.new(1199.31287, 52.2717781, 1536.91516)
+        elseif mylevel == 10 or mylevel <= 14 then 
+            ms = "monkey [lv. 14]"
+            naemquest = "junglequest"
+            levelquest = 1
+            namemon = "monkey"
+            cframequest = cframe.new(-1604.12012, 36.8521118, 154.23732)
+            posquest = vector3.new(-1604.12012, 36.8521118, 154.23732)
+            cframemon = cframe.new(-1772.4093017578, 60.860641479492, 54.872589111328)
+            posmon = vector3.new(-1772.4093017578, 60.860641479492, 54.872589111328)
+        elseif mylevel == 15 or mylevel <= 29 then 
+            ms = "gorilla [lv. 20]"
+            naemquest = "junglequest"
+            levelquest = 2
+            namemon = "gorilla"
+            cframequest = cframe.new(-1604.12012, 36.8521118, 154.23732)
+            posquest = vector3.new(-1604.12012, 36.8521118, 154.23732)
+            cframemon = cframe.new(-1223.52808, 6.27936459, -502.292664)
+            posmon = vector3.new(-1223.52808, 6.27936459, -502.292664)
+        elseif mylevel == 30 or mylevel <= 39 then 
+            ms = "pirate [lv. 35]"
+            naemquest = "buggyquest1"
+            levelquest = 1
+            namemon = "pirate"
+            cframequest = cframe.new(-1139.59717, 4.75205183, 3825.16211)
+            posquest = vector3.new(-1139.59717, 4.75205183, 3825.16211)
+            cframemon = cframe.new(-1219.32324, 4.75205183, 3915.63452)
+            posmon = vector3.new(-1219.32324, 4.75205183, 3915.63452)
+        elseif mylevel == 40 or mylevel <= 59 then 
+            ms = "brute [lv. 45]"
+            naemquest = "buggyquest1"
+            levelquest = 2
+            namemon = "brute"
+            cframequest = cframe.new(-1139.59717, 4.75205183, 3825.1621)
+            posquest = vector3.new(-1139.59717, 4.75205183, 3825.1621)
+            cframemon = cframe.new(-1146.49646, 96.0936813, 4312.1333)
+            posmon = vector3.new(-1146.49646, 96.0936813, 4312.1333)
+        elseif mylevel == 60 or mylevel <= 74 then 
+            ms = "desert bandit [lv. 60]"
+            naemquest = "desertquest"
+            levelquest = 1
+            namemon = "desert bandit"
+            cframequest = cframe.new(897.031128, 6.43846416, 4388.9716)
+            posquest = vector3.new(897.031128, 6.43846416, 4388.9716)
+            cframemon = cframe.new(932.788818, 6.4503746, 4488.24609)
+            posmon = vector3.new(932.788818, 6.4503746, 4488.24609)
+        elseif mylevel == 75 or mylevel <= 89 then 
+            ms = "desert officer [lv. 70]"
+            naemquest = "desertquest"
+            levelquest = 2
+            namemon = "desert officer"
+            cframequest = cframe.new(897.031128, 6.43846416, 4388.9716)
+            posquest = vector3.new(897.031128, 6.43846416, 4388.9716)
+            cframemon = cframe.new(1580.03198, 4.61375761, 4366.86426)
+            posmon = vector3.new(1580.03198, 4.61375761, 4366.86426)
+        elseif mylevel == 90 or mylevel <= 99 then 
+            ms = "snow bandit [lv. 90]"
+            naemquest = "snowquest"
+            levelquest = 1
+            namemon = "snow bandits"
+            cframequest = cframe.new(1384.14001, 87.272789, -1297.06482)
+            posquest = vector3.new(1384.14001, 87.272789, -1297.06482)
+            cframemon = cframe.new(1370.24316, 102.403511, -1411.52905)
+            posmon = vector3.new(1370.24316, 102.403511, -1411.52905)
+        elseif mylevel == 100 or mylevel <= 119 then 
+            ms = "snowman [lv. 100]"
+            naemquest = "snowquest"
+            levelquest = 2
+            namemon = "snowman"
+            cframequest = cframe.new(1384.14001, 87.272789, -1297.06482)
+            posquest = vector3.new(1384.14001, 87.272789, -1297.06482)
+            cframemon = cframe.new(1370.24316, 102.403511, -1411.52905)
+            posmon = vector3.new(1370.24316, 102.403511, -1411.52905)
+        elseif mylevel == 120 or mylevel <= 149 then 
+            ms = "chief petty officer [lv. 120]"
+            naemquest = "marinequest2"
+            levelquest = 1
+            namemon = "chief petty officer"
+            cframequest = cframe.new(-5035.0835, 28.6520386, 4325.29443)
+            posquest = vector3.new(-5035.0835, 28.6520386, 4325.29443)
+            cframemon = cframe.new(-4882.8623, 22.6520386, 4255.53516)
+            posmon = vector3.new(-4882.8623, 22.6520386, 4255.53516)
+        elseif mylevel == 150 or mylevel <= 174 then 
+            ms = "sky bandit [lv. 150]"
+            naemquest = "skyquest"
+            levelquest = 1
+            namemon = "sky bandit"
+            cframequest = cframe.new(-4841.83447, 717.669617, -2623.96436)
+            posquest = vector3.new(-4841.83447, 717.669617, -2623.96436)
+            cframemon = cframe.new(-4970.74219, 294.544342, -2890.11353)
+            posmon = vector3.new(-4970.74219, 294.544342, -2890.11353)
+        elseif mylevel == 175 or mylevel <= 189 then 
+            ms = "dark master [lv. 175]"
+            naemquest = "skyquest"
+            levelquest = 2
+            namemon = "dark master"
+            cframequest = cframe.new(-4841.83447, 717.669617, -2623.96436)
+            posquest = vector3.new(-4841.83447, 717.669617, -2623.96436)
+            cframemon = cframe.new(-5220.58594, 430.693298, -2278.17456)
+            posmon = vector3.new(-5220.58594, 430.693298, -2278.17456)
+            elseif mylevel == 190 or mylevel <= 209 then
+                ms = "prisoner [lv. 190]"
+                naemquest = "prisonerquest"
+                levelquest = 1
+                namemon = "prisoner"
+                cframequest = cframe.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
+                posquest = vector3.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
+                cframemon = cframe.new(5433.39307, 88.678093, 514.986877, 0.879988372, 0, -0.474995494, 0, 1, 0, 0.474995494, 0, 0.879988372)
+                posmon = vector3.new(5433.39307, 88.678093, 514.986877, 0.879988372, 0, -0.474995494, 0, 1, 0, 0.474995494, 0, 0.879988372)
+            elseif mylevel == 210 or mylevel <= 249 then
+                ms = "dangerous prisoner [lv. 210]"
+                naemquest = "prisonerquest"
+                levelquest = 2
+                namemon = "dangerous prisoner"
+                cframequest = cframe.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
+                posquest = vector3.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
+                cframemon = cframe.new(5433.39307, 88.678093, 514.986877, 0.879988372, 0, -0.474995494, 0, 1, 0, 0.474995494, 0, 0.879988372)
+                posmon = vector3.new(5433.39307, 88.678093, 514.986877, 0.879988372, 0, -0.474995494, 0, 1, 0, 0.474995494, 0, 0.879988372)
+        elseif mylevel == 250 or mylevel <= 274 then 
+            ms = "toga warrior [lv. 225]"
+            naemquest = "colosseumquest"
+            levelquest = 1
+            namemon = "toga warrior"
+            cframequest = cframe.new(-1576.11743, 7.38933945, -2983.30762)
+            posquest = vector3.new(-1576.11743, 7.38933945, -2983.30762)
+            cframemon = cframe.new(-1779.97583, 44.6077499, -2736.35474)
+            posmon = vector3.new(-1779.97583, 44.6077499, -2736.35474)
+        elseif mylevel == 275 or mylevel <= 299 then 
+            ms = "gladiator [lv. 275]"
+            naemquest = "colosseumquest"
+            levelquest = 2
+            namemon = "gladiato"
+            cframequest = cframe.new(-1576.11743, 7.38933945, -2983.30762)
+            posquest = vector3.new(-1576.11743, 7.38933945, -2983.30762)
+            cframemon = cframe.new(-1274.75903, 58.1895943, -3188.16309)
+            posmon = vector3.new(-1274.75903, 58.1895943, -3188.16309)
+        elseif mylevel == 300 or mylevel <= 329 then 
+            ms = "military soldier [lv. 300]"
+            naemquest = "magmaquest"
+            levelquest = 1
+            namemon = "military soldier"
+            cframequest = cframe.new(-5316.55859, 12.2370615, 8517.2998)
+            posquest = vector3.new(-5316.55859, 12.2370615, 8517.2998)
+            cframemon = cframe.new(-5363.01123, 41.5056877, 8548.47266)
+            posmon = vector3.new(-5363.01123, 41.5056877, 8548.47266)
+        elseif mylevel == 300 or mylevel <= 374 then 
+            ms = "military spy [lv. 330]"
+            naemquest = "magmaquest"
+            levelquest = 2
+            namemon = "military spy"
+            cframequest = cframe.new(-5316.55859, 12.2370615, 8517.2998)
+            posquest = vector3.new(-5316.55859, 12.2370615, 8517.2998)
+            cframemon = cframe.new(-5787.99023, 120.864456, 8762.25293)
+            posmon = vector3.new(-5787.99023, 120.864456, 8762.25293)
+        elseif mylevel == 375 or mylevel <= 399 then 
+            ms = "fishman warrior [lv. 375]"
+            naemquest = "fishmanquest"
+            levelquest = 1
+            namemon = "fishman warrior"
+            cframequest = cframe.new(61122.5625, 18.4716396, 1568.16504)
+            posquest = vector3.new(61122.5625, 18.4716396, 1568.16504)
+            cframemon = cframe.new(61163.8515625, 5.3073043823242, 1819.7841796875)
+            posmon = vector3.new(61163.8515625, 5.3073043823242, 1819.7841796875)
+            if getgenv().autofarm and (cframemon.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 3000 then
+				game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+			end
+        elseif mylevel == 400 or mylevel <= 449 then 
+            ms = "fishman commando [lv. 400]"
+            naemquest = "fishmanquest"
+            levelquest = 2
+            namemon = "fishman commando"
+            cframequest = cframe.new(61122.5625, 18.4716396, 1568.16504)
+            posquest = vector3.new(61122.5625, 18.4716396, 1568.16504)
+            cframemon = cframe.new(61163.8515625, 5.3073043823242, 1819.7841796875)
+            posmon = vector3.new(61163.8515625, 5.3073043823242, 1819.7841796875)
+            if getgenv().autofarm and (cframemon.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 3000 then
+				game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+			end
+        elseif mylevel == 450 or mylevel <= 474 then 
+            ms = "god's guard [lv. 450]"
+            naemquest = "skyexp1quest"
+            levelquest = 1
+            namemon = "god's guards"
+            cframequest = cframe.new(-4721.71436, 845.277161, -1954.20105)
+            posquest = vector3.new(-4721.71436, 845.277161, -1954.20105)
+            cframemon = cframe.new(-4716.95703, 853.089722, -1933.925427)
+            posmon = vector3.new(-4716.95703, 853.089722, -1933.925427)
+            if getgenv().autofarm and (cframemon.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 3000 then
+				game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(-4607.82275, 872.54248, -1667.55688))
+			end
+        elseif mylevel == 475 or mylevel <= 524 then 
+            ms = "shanda [lv. 475]"
+            naemquest = "skyexp1quest"
+            levelquest = 2
+            namemon = "shandas"
+            cframequest = cframe.new(-7863.63672, 5545.49316, -379.826324)
+            posquest = vector3.new(-7863.63672, 5545.49316, -379.826324)
+            cframemon = cframe.new(-7685.12354, 5601.05127, -443.171509)
+            posmon = vector3.new(-7685.12354, 5601.05127, -443.171509)
+            if getgenv().autofarm and (cframemon.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 3000 then
+				game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+			end
+        elseif mylevel == 525 or mylevel <= 549 then 
+            ms = "royal squad [lv. 525]"
+            naemquest = "skyexp2quest"
+            levelquest = 1
+            namemon = "royal squad"
+            cframequest = cframe.new(-7902.66895, 5635.96387, -1411.71802)
+            posquest = vector3.new(-7902.66895, 5635.96387, -1411.71802)
+            cframemon = cframe.new(-7685.02051, 5606.87842, -1442.729)
+            posmon = vector3.new(-7685.02051, 5606.87842, -1442.729)
+        elseif mylevel == 550 or mylevel <= 624 then 
+            ms = "royal soldier [lv. 550]"
+            naemquest = "skyexp2quest"
+            levelquest = 2
+            namemon = "royal soldier"
+            cframequest = cframe.new(-7902.66895, 5635.96387, -1411.71802)
+            posquest = vector3.new(-7902.66895, 5635.96387, -1411.71802)
+            cframemon = cframe.new(-7864.44775, 5661.94092, -1708.22351)
+            posmon = vector3.new(-7864.44775, 5661.94092, -1708.22351)
+        elseif mylevel == 625 or mylevel <= 649 then 
+            ms = "galley pirate [lv. 625]"
+            naemquest = "fountainquest"
+            levelquest = 1
+            namemon = "galley pirate"
+            cframequest = cframe.new(5254.60156, 38.5011406, 4049.69678)
+            posquest = vector3.new(5254.60156, 38.5011406, 4049.69678)
+            cframemon = cframe.new(5595.06982, 41.5013695, 3961.47095)
+            posmon = vector3.new(5595.06982, 41.5013695, 3961.47095)
+        elseif mylevel >= 650 then 
+            ms = "galley captain [lv. 650]"
+            naemquest = "fountainquest"
+            levelquest = 2
+            namemon = "galley captain"
+            cframequest = cframe.new(5254.60156, 38.5011406, 4049.69678)
+            posquest = vector3.new(5254.60156, 38.5011406, 4049.69678)
+            cframemon = cframe.new(5658.5752, 38.5361786, 4928.93506)
+            posmon = vector3.new(5658.5752, 38.5361786, 4928.93506)
+        end
+    end
+    if newworld then
+        if mylevel == 700 or mylevel <= 724 then 
+            ms = "raider [lv. 700]"
+            naemquest = "area1quest"
+            levelquest = 1
+            namemon = "raider"
+            cframequest = cframe.new(-424.080078, 73.0055847, 1836.91589)
+            posquest = vector3.new(-424.080078, 73.0055847, 1836.91589)
+            cframemon = cframe.new(-737.026123, 39.1748352, 2392.57959)
+            posmon = vector3.new(-737.026123, 39.1748352, 2392.57959)
+        elseif mylevel == 725 or mylevel <= 774 then 
+            ms = "mercenary [lv. 725]"
+            naemquest = "area1quest"
+            levelquest = 2
+            namemon = "mercenary"
+            cframequest = cframe.new(-424.080078, 73.0055847, 1836.91589)
+            posquest = vector3.new(-424.080078, 73.0055847, 1836.91589)
+            cframemon = cframe.new(-973.731995, 95.8733215, 1836.46936)
+            posmon = vector3.new(-973.731995, 95.8733215, 1836.46936)
+        elseif mylevel == 775 or mylevel <= 874 then 
+            ms = "swan pirate [lv. 775]"
+            naemquest = "area2quest"
+            levelquest = 1
+            namemon = "swan pirate"
+            cframequest = cframe.new(632.698608, 73.1055908, 918.666321)
+            posquest = vector3.new(632.698608, 73.1055908, 918.666321)
+            cframemon = cframe.new(970.369446, 142.653198, 1217.3667)
+            posmon = vector3.new(970.369446, 142.653198, 1217.3667)
+        elseif mylevel == 875 or mylevel <= 899 then 
+            ms = "marine lieutenant [lv. 875]"
+            naemquest = "marinequest3"
+            levelquest = 1
+            namemon = "marine lieutenant"
+            cframequest = cframe.new(-2442.65015, 73.0511475, -3219.11523)
+            posquest = vector3.new(-2442.65015, 73.0511475, -3219.11523)
+            cframemon = cframe.new(-3069.66, 101.71, -3171.04)
+            posmon = vector3.new(-3069.66, 101.71, -3171.04)
+        elseif mylevel == 900 or mylevel <= 949 then 
+            ms = "marine captain [lv. 900]"
+            naemquest = "marinequest3"
+            levelquest = 2
+            namemon = "marine captain"
+            cframequest = cframe.new(-2442.65015, 73.0511475, -3219.11523)
+            posquest = vector3.new(-2442.65015, 73.0511475, -3219.11523)
+            cframemon = cframe.new(-1868.67688, 73.0011826, -3321.66333)
+            posmon = vector3.new(-1868.67688, 73.0011826, -3321.66333)
+        elseif mylevel == 950 or mylevel <= 974 then 
+            ms = "zombie [lv. 950]"
+            naemquest = "zombiequest"
+            levelquest = 1
+            namemon = "zombie"
+            cframequest = cframe.new(-5492.79395, 48.5151672, -793.710571)
+            posquest = vector3.new(-5492.79395, 48.5151672, -793.710571)
+            cframemon = cframe.new(-5634.83838, 126.067039, -697.665039)
+            posmon = vector3.new(-5634.83838, 126.067039, -697.665039)
+        elseif mylevel == 975 or mylevel <= 999 then 
+            ms = "vampire [lv. 975]"
+            naemquest = "zombiequest"
+            levelquest = 2
+            namemon = "vampire"
+            cframequest = cframe.new(-5492.79395, 48.5151672, -793.710571)
+            posquest = vector3.new(-5492.79395, 48.5151672, -793.710571)
+            cframemon = cframe.new(-6030.32031, 6.4377408, -1313.5564)
+            posmon = vector3.new(-6030.32031, 6.4377408, -1313.5564)
+        elseif mylevel == 1000 or mylevel <= 1049 then 
+            ms = "snow trooper [lv. 1000]"
+            naemquest = "snowmountainquest"
+            levelquest = 1
+            namemon = "snow trooper"
+            cframequest = cframe.new(604.964966, 401.457062, -5371.69287)
+            posquest = vector3.new(604.964966, 401.457062, -5371.69287)
+            cframemon = cframe.new(535.893433, 401.457062, -5329.6958)
+            posmon = vector3.new(535.893433, 401.457062, -5329.6958)
+        elseif mylevel == 1050 or mylevel <= 1099 then 
+            ms = "winter warrior [lv. 1050]"
+            naemquest = "snowmountainquest"
+            levelquest = 2
+            namemon = "winter warrior"
+            cframequest = cframe.new(604.964966, 401.457062, -5371.69287)
+            posquest = vector3.new(604.964966, 401.457062, -5371.69287)
+            cframemon = cframe.new(1223.7417, 454.575226, -5170.02148)
+            posmon = vector3.new(1223.7417, 454.575226, -5170.02148)
+        elseif mylevel == 1100 or mylevel <= 1124 then 
+            ms = "lab subordinate [lv. 1100]"
+            naemquest = "icesidequest"
+            levelquest = 1
+            namemon = "lab subordinate"
+            cframequest = cframe.new(-6060.10693, 15.9868021, -4904.7876)
+            posquest = vector3.new(-6060.10693, 15.9868021, -4904.7876)
+            cframemon = cframe.new(-5769.2041, 37.9288292, -4468.38721)
+            posmon = vector3.new(-5769.2041, 37.9288292, -4468.38721)
+        elseif mylevel == 1125 or mylevel <= 1174 then 
+            ms = "horned warrior [lv. 1125]"
+            naemquest = "icesidequest"
+            levelquest = 2
+            namemon = "horned warrior"
+            cframequest = cframe.new(-6060.10693, 15.9868021, -4904.7876)
+            posquest = vector3.new(-6060.10693, 15.9868021, -4904.7876)
+            cframemon = cframe.new(-6400.85889, 24.7645149, -5818.63574)
+            posmon = vector3.new(-6400.85889, 24.7645149, -5818.63574)
+        elseif mylevel == 1175 or mylevel <= 1199 then 
+            ms = "magma ninja [lv. 1175]"
+            naemquest = "firesidequest"
+            levelquest = 1
+            namemon = "magma ninja"
+            cframequest = cframe.new(-5431.09473, 15.9868021, -5296.53223)
+            posquest = vector3.new(-5431.09473, 15.9868021, -5296.53223)
+            cframemon = cframe.new(-5496.65576, 58.6890411, -5929.76855)
+            posmon = vector3.new(-5496.65576, 58.6890411, -5929.76855)
+        elseif mylevel == 1200 or mylevel <= 1349 then 
+            ms = "lava pirate [lv. 1200]"
+            naemquest = "firesidequest"
+            levelquest = 2
+            namemon = "lava pirate"
+            cframequest = cframe.new(-5431.09473, 15.9868021, -5296.53223)
+            posquest = vector3.new(-5431.09473, 15.9868021, -5296.53223)
+            cframemon = cframe.new(-5169.71729, 34.1234779, -4669.73633)
+            posmon = vector3.new(-5169.71729, 34.1234779, -4669.73633)
+        elseif mylevel == 1250 or mylevel <= 1274 or selectmonster == "ship deckhand [lv. 1250]" then -- ship deckhand
+            ms = "ship deckhand [lv. 1250]"
+            naemquest = "shipquest1"
+            levelquest = 1
+            namemon = "ship deckhand"
+            cframequest = cframe.new(1040.2927246094, 125.08293151855, 32911.0390625)
+            cframemon = cframe.new(921.12365722656, 125.9839553833, 33088.328125)
+			if getgenv().autofarm and (cframemon.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 20000 then
+				game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+			end
+		elseif mylevel == 1275 or mylevel <= 1299 or selectmonster == "ship engineer [lv. 1275]" then -- ship engineer
+            ms = "ship engineer [lv. 1275]"
+            naemquest = "shipquest1"
+            levelquest = 2
+            namemon = "ship engineer"
+            cframequest = cframe.new(1040.2927246094, 125.08293151855, 32911.0390625)
+            cframemon = cframe.new(886.28179931641, 40.47790145874, 32800.83203125)
+			if getgenv().autofarm and (cframemon.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 20000 then
+				game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+			end
+		elseif mylevel == 1300 or mylevel <= 1324 or selectmonster == "ship steward [lv. 1300]" then -- ship steward
+            ms = "ship steward [lv. 1300]"
+            naemquest = "shipquest2"
+            levelquest = 1
+            namemon = "ship steward"
+            cframequest = cframe.new(971.42065429688, 125.08293151855, 33245.54296875)
+            cframemon = cframe.new(943.85504150391, 129.58183288574, 33444.3671875)
+			if getgenv().autofarm and (cframemon.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 20000 then
+				game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+			end
+		elseif mylevel == 1325 or mylevel <= 1349 or selectmonster == "ship officer [lv. 1325]" then -- ship officer
+            ms = "ship officer [lv. 1325]"
+            naemquest = "shipquest2"
+            levelquest = 2
+            namemon = "ship officer"
+            cframequest = cframe.new(971.42065429688, 125.08293151855, 33245.54296875)
+            cframemon = cframe.new(955.38458251953, 181.08335876465, 33331.890625)
+			if getgenv().autofarm and (cframemon.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 20000 then
+				game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+			end
+        elseif mylevel == 1350 or mylevel <= 1374 then 
+            ms = "arctic warrior [lv. 1350]"
+            naemquest = "frostquest"
+            levelquest = 1
+            namemon = "arctic warrior"
+            cframequest = cframe.new(5669.43506, 28.2117786, -6482.60107)
+            posquest = vector3.new(5669.43506, 28.2117786, -6482.60107)
+            cframemon = cframe.new(5995.07471, 57.3188477, -6183.47314)
+            posmon = vector3.new(5995.07471, 57.3188477, -6183.47314)
+            if getgenv().autofarm and (cframemon.position - game.players.localplayer.character.humanoidrootpart.position).magnitude > 20000 then
+				game:getservice("replicatedstorage").remotes.commf_:invokeserver("requestentrance",vector3.new(-6508.5581054688, 89.034996032715, -132.83953857422))
+			end
+        elseif mylevel == 1375 or mylevel <= 1424 then 
+            ms = "snow lurker [lv. 1375]"
+            naemquest = "frostquest"
+            levelquest = 2
+            namemon = "snow lurker"
+            cframequest = cframe.new(5669.43506, 28.2117786, -6482.60107)
+            posquest = vector3.new(5669.43506, 28.2117786, -6482.60107)
+            cframemon = cframe.new(5518.00684, 60.5559731, -6828.80518)
+            posmon = vector3.new(5518.00684, 60.5559731, -6828.80518)
+        elseif mylevel == 1425 or mylevel <= 1449 then 
+            ms = "sea soldier [lv. 1425]"
+            naemquest = "forgottenquest"
+            levelquest = 1
+            namemon = "sea soldier"
+            cframequest = cframe.new(-3052.99097, 236.881363, -10148.1943)
+            posquest = vector3.new(-3052.99097, 236.881363, -10148.1943)
+            cframemon = cframe.new(-3030.3696289063, 191.13464355469, -9859.7958984375)
+            posmon = vector3.new(-3030.3696289063, 191.13464355469, -9859.7958984375)
+        elseif mylevel >= 1450 then 
+            ms = "water fighter [lv. 1450]"
+            naemquest = "forgottenquest"
+            levelquest = 2
+            namemon = "water fighter"
+            cframequest = cframe.new(-3052.99097, 236.881363, -10148.1943)
+            posquest = vector3.new(-3052.99097, 236.881363, -10148.1943)
+            cframemon = cframe.new(-3436.7727050781, 290.52191162109, -10503.438476563)
+            posmon = vector3.new(-3436.7727050781, 290.52191162109, -10503.438476563)
+        end
+    end
+if threeworld then
+        if mylevel >= 1500 and mylevel <= 1524 then
+            ms = "pirate millionaire [lv. 1500]"
+            naemquest = "pirateportquest"
+            levelquest = 1
+            namemon = "pirate millionaire"
+            cframequest = cframe.new(-290.074677, 42.9034653, 5581.58984)
+            posquest = vector3.new(-290.074677, 42.9034653, 5581.58984)
+            cframemon = cframe.new(81.164993286133, 43.755737304688, 5724.7021484375)
+            posmon = vector3.new(81.164993286133, 43.755737304688, 5724.7021484375)
+        elseif mylevel >= 1525 and mylevel <= 1574 then
+            ms = "pistol billionaire [lv. 1525]"
+            naemquest = "pirateportquest"
+            levelquest = 2
+            namemon = "pistol billionaire"
+            cframequest = cframe.new(-290.074677, 42.9034653, 5581.58984)
+            posquest = vector3.new(-290.074677, 42.9034653, 5581.58984)
+            cframemon = cframe.new(81.164993286133, 43.755737304688, 5724.7021484375)
+            posmon = vector3.new(81.164993286133, 43.755737304688, 5724.7021484375)
+        elseif mylevel >= 1575 and mylevel <= 1599 then
+            ms = "dragon crew warrior [lv. 1575]"
+            naemquest = "amazonquest"
+            levelquest = 1
+            namemon = "dragon crew warrior"
+            cframequest = cframe.new(5832.83594, 51.6806107, -1101.51563)
+            posquest = vector3.new(5832.83594, 51.6806107, -1101.51563)
+            cframemon = cframe.new(6241.9951171875, 51.522083282471, -1243.9771728516)
+            posmon = vector3.new(6241.9951171875, 51.522083282471, -1243.9771728516)
+        elseif mylevel >= 1600 and mylevel <= 1624 then
+            ms = "dragon crew archer [lv. 1600]"
+            naemquest = "amazonquest"
+            levelquest = 2
+            namemon = "dragon crew archer"
+            cframequest = cframe.new(5832.83594, 51.6806107, -1101.51563)
+            posquest = vector3.new(5832.83594, 51.6806107, -1101.51563)
+            cframemon = cframe.new(6488.9155273438, 383.38375854492, -110.66246032715)
+            posmon = vector3.new(6488.9155273438, 383.38375854492, -110.66246032715)
+        elseif mylevel >= 1625 and mylevel <= 1649 then
+            ms = "female islander [lv. 1625]"
+            naemquest = "amazonquest2"
+            levelquest = 1
+            namemon = "female islander"
+            cframequest = cframe.new(5448.86133, 601.516174, 751.130676)
+            posquest = vector3.new(5448.86133, 601.516174, 751.130676)
+            cframemon = cframe.new(5825.2241210938, 682.89245605469, 704.57958984375)
+            posmon = vector3.new(5825.2241210938, 682.89245605469, 704.57958984375)
+        elseif mylevel >= 1650 and mylevel <= 1699 then
+            ms = "giant islander [lv. 1650]"
+            naemquest = "amazonquest2"
+            levelquest = 2
+            namemon = "giant islander"
+            cframequest = cframe.new(5448.86133, 601.516174, 751.130676)
+            posquest = vector3.new(5448.86133, 601.516174, 751.130676)
+            cframemon = cframe.new(4530.3540039063, 656.75695800781, -131.60952758789)
+            posmon = vector3.new(4530.3540039063, 656.75695800781, -131.60952758789)
+        elseif mylevel >= 1700 and mylevel <= 1724 then
+            ms = "marine commodore [lv. 1700]"
+            naemquest = "marinetreeisland"
+            levelquest = 1
+            namemon = "marine commodore"
+            cframequest = cframe.new(2180.54126, 27.8156815, -6741.5498)
+            posquest = vector3.new(2180.54126, 27.8156815, -6741.5498)
+            cframemon = cframe.new(2490.0844726563, 190.4232635498, -7160.0502929688)
+            posmon = vector3.new(2490.0844726563, 190.4232635498, -7160.0502929688)
+        elseif mylevel >= 1725 and mylevel <= 1774 then
+            ms = "marine rear admiral [lv. 1725]"
+            naemquest = "marinetreeisland"
+            levelquest = 2
+            namemon = "marine rear admiral"
+            cframequest = cframe.new(2180.54126, 27.8156815, -6741.5498)
+            posquest = vector3.new(2180.54126, 27.8156815, -6741.5498)
+            cframemon = cframe.new(3951.3903808594, 229.11549377441, -6912.81640625)
+            posmon = vector3.new(3951.3903808594, 229.11549377441, -6912.81640625)
+        elseif mylevel >= 1775 and mylevel <= 1799 then
+            ms = "fishman raider [lv. 1775]"
+            naemquest = "deepforestisland3"
+            levelquest = 1
+            namemon = "fishman raider"
+            cframequest = cframe.new(-10581.6563, 330.872955, -8761.18652)
+            posquest = vector3.new(-10581.6563, 330.872955, -8761.18652)
+            cframemon = cframe.new(-10322.400390625, 390.94473266602, -8580.0908203125)
+            posmon = vector3.new(-10322.400390625, 390.94473266602, -8580.0908203125)
+        elseif mylevel >= 1800 and mylevel <= 1824 then
+            ms = "fishman captain [lv. 1800]"
+            naemquest = "deepforestisland3"
+            levelquest = 2
+            namemon = "fishman captain"
+            cframequest = cframe.new(-10581.6563, 330.872955, -8761.18652)
+            posquest = vector3.new(-10581.6563, 330.872955, -8761.18652)
+            cframemon = cframe.new(-11194.541992188, 442.02795410156, -8608.806640625)
+            posmon = vector3.new(-11194.541992188, 442.02795410156, -8608.806640625)
+        elseif mylevel >= 1825 and mylevel <= 1849 then
+            ms = "forest pirate [lv. 1825]"
+            naemquest = "deepforestisland"
+            levelquest = 1
+            namemon = "forest pirate"
+            cframequest = cframe.new(-13234.04, 331.488495, -7625.40137)
+            posquest = vector3.new(-13234.04, 331.488495, -7625.40137)
+            cframemon = cframe.new(-13225.809570313, 428.19387817383, -7753.1245117188)
+            posmon = vector3.new(-13225.809570313, 428.19387817383, -7753.1245117188)
+        elseif mylevel >= 1850 and mylevel <= 1899 then
+            ms = "mythological pirate [lv. 1850]"
+            naemquest = "deepforestisland"
+            levelquest = 2
+            namemon = "mythological pirate"
+            cframequest = cframe.new(-13234.04, 331.488495, -7625.40137)
+            posquest = vector3.new(-13234.04, 331.488495, -7625.40137)
+            cframemon = cframe.new(-13869.172851563, 564.95251464844, -7084.4135742188)
+            posmon = vector3.new(-13869.172851563, 564.95251464844, -7084.4135742188)
+        elseif mylevel >= 1900 and mylevel <= 1924 then
+            ms = "jungle pirate [lv. 1900]"
+            naemquest = "deepforestisland2"
+            levelquest = 1
+            namemon = "jungle pirate"
+            cframequest = cframe.new(-12680.3818, 389.971039, -9902.01953)
+            posquest = vector3.new(-12680.3818, 389.971039, -9902.01953)
+            cframemon = cframe.new(-11982.221679688, 376.32522583008, -10451.415039063)
+            posmon = vector3.new(-11982.221679688, 376.32522583008, -10451.415039063)
+        elseif mylevel >= 1925 and mylevel <= 1974 then
+            ms = "musketeer pirate [lv. 1925]"
+            naemquest = "deepforestisland2"
+            levelquest = 2
+            namemon = "musketeer pirate"
+            cframequest = cframe.new(-12680.3818, 389.971039, -9902.01953)
+            posquest = vector3.new(-12680.3818, 389.971039, -9902.01953)
+            cframemon = cframe.new(-13282.3046875, 496.23684692383, -9565.150390625)
+            posmon = vector3.new(-13282.3046875, 496.23684692383, -9565.150390625)
+        elseif mylevel >= 1975 and mylevel <= 1999 then
+            ms = "reborn skeleton [lv. 1975]"
+            naemquest = "hauntedquest1"
+            levelquest = 1
+            namemon = "reborn skeleton"
+            cframequest = cframe.new(-9480.8271484375, 142.13066101074, 5566.0712890625)
+            posquest = vector3.new(-9480.8271484375, 142.13066101074, 5566.0712890625)
+            cframemon = cframe.new(-8817.880859375, 191.16761779785, 6298.6557617188)
+            posmon = vector3.new(-8817.880859375, 191.16761779785, 6298.6557617188)
+        elseif mylevel >= 2000 and mylevel <= 2024 then
+            ms = "living zombie [lv. 2000]"
+            naemquest = "hauntedquest1"
+            levelquest = 2
+            namemon = "living zombie"
+            cframequest = cframe.new(-9480.8271484375, 142.13066101074, 5566.0712890625)
+            posquest = vector3.new(-9480.8271484375, 142.13066101074, 5566.0712890625)
+            cframemon = cframe.new(-10125.234375, 183.94705200195, 6242.013671875)
+            posmon = vector3.new(-10125.234375, 183.94705200195, 6242.013671875)
+        elseif mylevel >= 2025 and mylevel <= 2049  then
+            ms = "demonic soul [lv. 2025]"
+            naemquest = "hauntedquest2"
+            levelquest = 1
+            namemon = "demonic soul"
+            cframequest = cframe.new(-9516.9931640625, 178.00651550293, 6078.4653320313)
+            posquest = vector3.new(-9516.9931640625, 178.00651550293, 6078.4653320313)
+            cframemon = cframe.new(-9712.03125, 204.69589233398, 6193.322265625)
+            posmon = vector3.new(-9712.03125, 204.69589233398, 6193.322265625)
+        elseif mylevel >= 2050 and mylevel <= 2074  then
+            ms = "posessed mummy [lv. 2050]"
+            naemquest = "hauntedquest2"
+            levelquest = 2
+            namemon = "posessed mummy"
+            cframequest = cframe.new(-9516.9931640625, 178.00651550293, 6078.4653320313)
+            posquest = vector3.new(-9516.9931640625, 178.00651550293, 6078.4653320313)
+            cframemon = cframe.new(-9545.7763671875, 69.619895935059, 6339.5615234375)    
+            posmon = vector3.new(-9545.7763671875, 69.619895935059, 6339.5615234375)
+        elseif mylevel >= 2075 and mylevel <= 2099  then
+            ms = "peanut scout [lv. 2075]"
+            naemquest = "nutsislandquest"
+            levelquest = 1
+            namemon = "peanut scout"
+            cframequest = cframe.new(-2105.53198, 37.2495995, -10195.5088, -0.766061664, 0, -0.642767608, 0, 1, 0, 0.642767608, 0, -0.766061664)
+            posquest = vector3.new(-2105.53198, 37.2495995, -10195.5088, -0.766061664, 0, -0.642767608, 0, 1, 0, 0.642767608, 0, -0.766061664)
+            cframemon = cframe.new(-2126.47998, 192.095154, -10204.6553, 0.0779861137, -9.29044361e-08, 0.996954441, 6.59006432e-08, 1, 8.80332109e-08, -0.996954441, 5.88345728e-08, 0.0779861137)    
+            posmon = vector3.new(-2126.47998, 192.095154, -10204.6553, 0.0779861137, -9.29044361e-08, 0.996954441, 6.59006432e-08, 1, 8.80332109e-08, -0.996954441, 5.88345728e-08, 0.0779861137)
+        elseif mylevel >= 2100 and mylevel <= 2124  then
+            ms = "peanut president [lv. 2100]"
+            naemquest = "nutsislandquest"
+            levelquest = 2
+            namemon = "peanut president"
+            cframequest = cframe.new(-2105.53198, 37.2495995, -10195.5088, -0.766061664, 0, -0.642767608, 0, 1, 0, 0.642767608, 0, -0.766061664)
+            posquest = vector3.new(-2105.53198, 37.2495995, -10195.5088, -0.766061664, 0, -0.642767608, 0, 1, 0, 0.642767608, 0, -0.766061664)
+            cframemon = cframe.new(-2126.47998, 192.095154, -10204.6553, 0.0779861137, -9.29044361e-08, 0.996954441, 6.59006432e-08, 1, 8.80332109e-08, -0.996954441, 5.88345728e-08, 0.0779861137)    
+            posmon = vector3.new(-2126.47998, 192.095154, -10204.6553, 0.0779861137, -9.29044361e-08, 0.996954441, 6.59006432e-08, 1, 8.80332109e-08, -0.996954441, 5.88345728e-08, 0.0779861137)
+        elseif mylevel >= 2125 and mylevel <= 2149  then
+            ms = "ice cream chef [lv. 2125]"
+            naemquest = "icecreamislandquest"
+            levelquest = 1
+            namemon = "ice cream chef"
+            cframequest = cframe.new(-819.376709, 64.9259796, -10967.2832, -0.766061664, 0, 0.642767608, 0, 1, 0, -0.642767608, 0, -0.766061664)
+            posquest = vector3.new(-819.376709, 64.9259796, -10967.2832, -0.766061664, 0, 0.642767608, 0, 1, 0, -0.642767608, 0, -0.766061664)
+            cframemon = cframe.new(-789.941528, 209.382889, -11009.9805, -0.0703101531, -0, -0.997525156, -0, 1.00000012, -0, 0.997525275, 0, -0.0703101456)    
+            posmon = vector3.new(-789.941528, 209.382889, -11009.9805, -0.0703101531, -0, -0.997525156, -0, 1.00000012, -0, 0.997525275, 0, -0.0703101456)
+        elseif mylevel >= 2150 and mylevel <= 2200 then
+            ms = "ice cream commander [lv. 2150]"
+            naemquest = "icecreamislandquest"
+            levelquest = 2
+            namemon = "ice cream commander"
+            cframequest = cframe.new(-819.376709, 64.9259796, -10967.2832, -0.766061664, 0, 0.642767608, 0, 1, 0, -0.642767608, 0, -0.766061664)
+            posquest = vector3.new(-819.376709, 64.9259796, -10967.2832, -0.766061664, 0, 0.642767608, 0, 1, 0, -0.642767608, 0, -0.766061664)
+            cframemon = cframe.new(-789.941528, 209.382889, -11009.9805, -0.0703101531, -0, -0.997525156, -0, 1.00000012, -0, 0.997525275, 0, -0.0703101456)    
+            posmon = vector3.new(-789.941528, 209.382889, -11009.9805, -0.0703101531, -0, -0.997525156, -0, 1.00000012, -0, 0.997525275, 0, -0.0703101456)
+            elseif mylevel >= 2200 and mylevel <= 2225 then
+            ms = "cookie crafter [lv. 2200]"
+            naemquest = "cakequest1"
+            levelquest = 1
+            namemon = "cookie crafter"
+            cframequest = cframe.new(-2021.29150390625, 37.79822540283203, -12027.0205078125)
+            posquest = cframe.new(-2021.29150390625, 37.79822540283203, -12027.0205078125)
+            cframemon = cframe.new(-2272.864013671875, 146.5398406982422, -12189.0478515625)
+            posmon = cframe.new(-2272.864013671875, 146.5398406982422, -12189.0478515625)
+        elseif mylevel >= 2225 and mylevel <= 2250 then
+            ms = "cake guard [lv. 2225]"
+            naemquest = "cakequest1"
+            levelquest = 2
+            namemon = "cake guard"
+            cframequest = cframe.new(-2021.29150390625, 37.79822540283203, -12027.0205078125)
+            posquest = cframe.new(-2021.29150390625, 37.79822540283203, -12027.0205078125)
+            cframemon = cframe.new(-1823.2464599609375, 210.2261505126953, -12292.82421875)
+            posmon = cframe.new(-1823.2464599609375, 210.2261505126953, -12292.82421875)
+        elseif mylevel >= 2250 and mylevel <= 2275 then
+            ms = "baking staff [lv. 2250]"
+            naemquest = "cakequest2"
+            levelquest = 1
+            namemon = "baking staff"
+            cframequest = cframe.new(-1928.324462890625, 37.798133850097656, -12843.0517578125)
+            posquest = cframe.new(-1928.324462890625, 37.798133850097656, -12843.0517578125)
+            cframemon = cframe.new(-2000.436767578125, 385.1067810058594, -13096.3330078125)
+            posmon = cframe.new(-2000.436767578125, 385.1067810058594, -13096.3330078125)
+        elseif mylevel == 2275 and mylevel <= 2300 then
+
+            ms = "head baker [lv. 2275]"
+
+            naemquest = "cakequest2"
+            levelquest = 2
+            namemon = "head baker"
+            cframequest = cframe.new(-1927.9107666015625, 37.79813003540039, -12843.78515625)
+            cframemon = cframe.new(-2203.302490234375, 109.90937042236328, -12788.7333984375)
+         elseif mylevel == 2300 and level <= 2324 then
+               ms = "cocoa warrior [lv. 2300]"
+               levelquest = 1
+               naemquest = "chocquest1"
+               namemon = "cocoa warrior"
+               cframequest = cframe.new(231.742981, 25.3354111, -12199.0537, 0.998278677, -5.16006757e-08, 0.0586484075, 4.79685092e-08, 1, 6.33390442e-08, -0.0586484075, -6.04167383e-08, 0.998278677)
+               cframemon = cframe.new(231.742981, 25.3354111, -12199.0537, 0.998278677, -5.16006757e-08, 0.0586484075, 4.79685092e-08, 1, 6.33390442e-08, -0.0586484075, -6.04167383e-08, 0.998278677)
+            elseif mylevel == 2325 and level <= 2349 then
+               ms = "chocolate bar battler [lv. 2325]"
+               levelquest = 2
+               naemquest = "chocquest1"
+               namemon = "chocolate bar battler"
+              cframequest = cframe.new(231.742981, 25.3354111, -12199.0537, 0.998278677, -5.16006757e-08, 0.0586484075, 4.79685092e-08, 1, 6.33390442e-08, -0.0586484075, -6.04167383e-08, 0.998278677)
+              cframemon = cframe.new(231.742981, 25.3354111, -12199.0537, 0.998278677, -5.16006757e-08, 0.0586484075, 4.79685092e-08, 1, 6.33390442e-08, -0.0586484075, -6.04167383e-08, 0.998278677)
+              elseif mylevel == 2350 and level <= 2374 then
+               ms = "sweet thief [lv. 2350]"
+               levelquest = 1
+               naemquest = "chocquest2"
+               namemon = "sweet thief"
+              cframequest = cframe.new(149.867218, 24.8196201, -12775.5283, -0.0371122323, -7.14229245e-08, -0.99931109, -6.93553162e-08, 1, -6.88964548e-08, 0.99931109, 6.6750637e-08, -0.0371122323)
+              cframemon = cframe.new(149.867218, 24.8196201, -12775.5283, -0.0371122323, -7.14229245e-08, -0.99931109, -6.93553162e-08, 1, -6.88964548e-08, 0.99931109, 6.6750637e-08, -0.0371122323)
+             elseif mylevel >= 2375 then
+               ms = "candy rebel [lv. 2375]"
+               levelquest = 2
+               naemquest = "chocquest2"
+               namemon = "candy rebel"
+              cframequest = cframe.new(149.867218, 24.8196201, -12775.5283, -0.0371122323, -7.14229245e-08, -0.99931109, -6.93553162e-08, 1, -6.88964548e-08, 0.99931109, 6.6750637e-08, -0.0371122323)
+              cframemon = cframe.new(149.867218, 24.8196201, -12775.5283, -0.0371122323, -7.14229245e-08, -0.99931109, -6.93553162e-08, 1, -6.88964548e-08, 0.99931109, 6.6750637e-08, -0.0371122323)end
+    end
+end
+checkquest()
+function equipweapon(toolse) if game.players.localplayer.backpack:findfirstchild(toolse) then local tool = game.players.localplayer.backpack:findfirstchild(toolse) wait(.4)
+	game.players.localplayer.character.humanoid:equiptool(tool)end end
+
+local uilib = loadstring(game:httpget('https://raw.githubusercontent.com/bestxemchuaa/bestxemchuaa/main/test/gg.txt'))()
+local dinohub = instance.new("screengui")
+local openclose = instance.new("textbutton") dinohub.name="dinohub"
+dinohub.parent=game.coregui
+dinohub.zindexbehavior=enum.zindexbehavior.sibling
+openclose.name="openclose"
+openclose.parent=dinohub
+openclose.backgroundcolor3=color3.fromrgb(255, 52, 0)
+openclose.bordersizepixel=0
+openclose.position=udim2.new(0.120833337, 0, 0.0952890813, 0)
+openclose.size=udim2.new(0.0447916649, 0, 0.0845824406, 0)
+openclose.font=enum.font.denkone
+openclose.text="open"
+openclose.textcolor3=color3.fromrgb(255, 0, 0)
+openclose.textscaled=true
+openclose.textsize=14.000
+openclose.textwrapped=true
+openclose.mousebutton1click:connect(function()
+game.coregui:findfirstchild("best xem chùa").enabled = not game.coregui:findfirstchild("best xem chùa").enabled
+end)
+
+local win = uilib:window("nigger nigger", color3.fromrgb(246, 241, 28))
+local up = win:tab("💫update")
+local autofarm = win:tab("🎊main")
+local main = win:tab("💪auto something")
+local stat = win:tab("✨⭐stats")
+local pvp = win:tab("🙇players")
+local shoptab = win:tab("👛shop")
+local raidstab =  win:tab("💀 raids")
+local teleporttab = win:tab("🦸💝teleport")
+local misc = win:tab("🌚🌝 misc")
+lol = {}
+for i,v in pairs(game.players.localplayer.backpack:getchildren()) do  
+    if v:isa("tool") then
+       table.insert(lol ,v.name)
+    end
+end
+for i,v in pairs(game.players.localplayer.character:getchildren()) do  
+    if v:isa("tool") then
+       table.insert(lol, v.name)
+    end
+end
+spawn(function()  game:getservice("runservice").heartbeat:connect(function() if getgenv().noclip or getgenv().autofarm or getgenv().observation or getgenv().autonew or getgenv().factory or getgenv().gunmastery or getgenv().mastery or framboss or framallboss or getgenv().getgenv().autobartilo or getgenv().mobaura or getgenv().autorengoku or getgenv().autosharkman or getgenv().ectoplasm or getgenv().polehop or getgenv().swanhop or getgenv().blackbeardhop or getgenv().chest or getgenv().electro or rainbowhaki or hunter or observationv2 or getgenv().elitehunthop or getgenv().elitehunt or getgenv().pole or getgenv().tushitahop or getgenv().yamahop or getgenv().storefruit or getgenv().holytorch then   if not game:getservice("workspace"):findfirstchild("lol") then
+                local lol = instance.new("part")
+                lol.name = "lol"
+                lol.parent = game.workspace
+                lol.anchored = true
+                lol.transparency = 1
+                lol.size = vector3.new(30,-0.5,30)
+            elseif game:getservice("workspace"):findfirstchild("lol") then  game.workspace["lol"].cframe = game.players.localplayer.character.humanoidrootpart.cframe * cframe.new(0, -3.6, 0) end
+else  if game:getservice("workspace"):findfirstchild("lol") then  game:getservice("workspace"):findfirstchild("lol"):destroy() end end end) end)
+spawn(function()  game:getservice("runservice").stepped:connect(function()  if getgenv().noclip or getgenv().autofarm or getgenv().observation or getgenv().autonew or getgenv().factory or getgenv().gunmastery or getgenv().mastery or framboss or framallboss or getgenv().getgenv().autobartilo or getgenv().mobaura or getgenv().autorengoku or getgenv().autosharkman or getgenv().ectoplasm or getgenv().polehop or getgenv().swanhop or getgenv().blackbeardhop or getgenv().chest or getgenv().electro or rainbowhaki or hunter or observationv2 or getgenv().elitehunthop or getgenv().elitehunt or getgenv().pole or getgenv().tushitahop or getgenv().yamahop or getgenv().storefruit or getgenv().holytorch then  for _, v in pairs(game.players.localplayer.character:getdescendants()) do  if v:isa("basepart") then
+   v.cancollide = false end     end    end end) end)
+   
+   up:label("update change ui")
+   up:label("fix autofarm bone")
+   up:label("add auto select farm bone/boss")
+   up:label("add auto farm boss")
+   up:label("delete hitbox photo")
+   up:label("add super bring mob")
+   up:label("check elti/point")
+   up:label("add soru no cooldown")
+   up:label("add buy items")
+   
+autofarm:toggle("auto farm",false,function(vu)
+    getgenv().autofarm= vu
+end)
+spawn(function()
+		while wait() do
+			if getgenv().autofarm then
+				autoquest()
+				tp()
+				autofarm()
+			end
+		end
+	end)
+	game:getservice("runservice").heartbeat:connect(
+	function()
+		if getgenv().noclip or getgenv().autofarm or getgenv().observation or getgenv().autonew or getgenv().factory or getgenv().gunmastery or getgenv().mastery or framboss or framallboss or getgenv().getgenv().autobartilo or getgenv().mobaura or getgenv().autorengoku or getgenv().autosharkman or getgenv().ectoplasm or getgenv().polehop or getgenv().swanhop or getgenv().blackbeardhop or getgenv().chest or getgenv().electro or rainbowhaki or hunter or observationv2 or getgenv().elitehunthop or getgenv().elitehunt or getgenv().pole or getgenv().tushitahop or getgenv().yamahop or getgenv().storefruit or getgenv().holytorch then
+			if game:getservice("players").localplayer.character:findfirstchild("humanoid") then
+				game:getservice("players").localplayer.character.humanoid:changestate(11)
+			end
+		end
+	end)
+	game:getservice('runservice').stepped:connect(function()
+    if getgenv().autofarm then
+       game.players.localplayer.character.humanoid:changestate(11)
+	end
+end)
+
+spawn(function()
+    while wait() do
+        if getgenv().autofarm then
+            autoquest()
+            tp()
+        end
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if getgenv().bodyvelo then
+            if not game.players.localplayer.character.humanoidrootpart:findfirstchild("velocitybody") then
+                local bv = instance.new("bodyvelocity")
+                bv.parent = game.players.localplayer.character.humanoidrootpart
+                bv.name = "velocitybody"
+                bv.maxforce = vector3.new(100000,100000,100000)
+                bv.velocity = vector3.new(0,0,0)
+            end
+        else
+            if game.players.localplayer.character.humanoidrootpart:findfirstchild("velocitybody") then
+                game.players.localplayer.character.humanoidrootpart:findfirstchild("velocitybody"):destroy()
+            end
+        end
+    end
+end)
+function autoquest()     if game.players.localplayer.playergui.main.quest.visible == false then
+        checkquest()
+        repeat wait()
+            chichdiem(cframequest)
+        until (game.players.localplayer.character.humanoidrootpart.position - cframequest.position).magnitude <= 4
+        wait(0.4)
+        local args = {
+            [1] = "startquest",
+            [2] = naemquest,
+            [3] = levelquest
+        }
+            
+        game:getservice("replicatedstorage").remotes.commf_:invokeserver(unpack(args))
+    end
+end
+function tp()
+    local mob = game:getservice("workspace").enemies:getchildren()
+    local mylevel = game.players.localplayer.data.level.value
+    if game.players.localplayer.playergui.main.quest.visible == true then
+					if game:getservice("workspace").enemies:findfirstchild(ms) then
+						for i,v in pairs(game:getservice("workspace").enemies:getchildren()) do
+							if v.name == ms and v:findfirstchild("humanoid") then
+								if v.humanoid.health > 0 then
+									repeat game:getservice("runservice").heartbeat:wait()
+										if game:getservice("workspace").enemies:findfirstchild(ms) then
+											if string.find(game:getservice("players").localplayer.playergui.main.quest.container.questtitle.title.text, namemon) then
+                                                equipweapon(getgenv().tool)
+                                                autohaki()
+												v.humanoidrootpart.cancollide = false
+												v.humanoidrootpart.size = vector3.new(60, 60, 60)
+                                                chichdiem(v.humanoidrootpart.cframe * cframe.new(0,30,0))
+												game:getservice("virtualuser"):capturecontroller()
+												game:getservice("virtualuser"):button1down(vector2.new(1280, 670),workspace.currentcamera.cframe)
+												magnetactive = true
+												posmon = v.humanoidrootpart.cframe
+											else
+												
+												game:getservice("replicatedstorage").remotes.commf_:invokeserver("abandonquest")
+											end
+										else
+											
+											
+											chichdiem(cframemon)
+										end
+									until not v.parent or v.humanoid.health <= 0 or getgenv().autofarm == false or game.players.localplayer.playergui.main.quest.visible == false or not game:getservice("workspace").enemies:findfirstchild(v.name)
+								end
+							end
+						end
+end
+
+end
+end
+
+function autofarm()
+    pcall(function()
+	if getgenv().autofarm then
+		if autoquest then
+			if localplayer.playergui.main.quest.visible == false then
+				stoptween()
+				statrmagnet = false
+				checkquest()
+				repeat chichdiem(cframequest) wait() until getgenv().stoptween == true or not getgenv().autofarm or (game.players.localplayer.character.humanoidrootpart.position - cframequest.position).magnitude <= 8
+				wait(0.9)
+				if getgenv().autofarm then
+					game:getservice("replicatedstorage").remotes.commf_:invokeserver("setspawnpoint")
+					game:getservice("replicatedstorage").remotes.commf_:invokeserver("startquest", naemquest, levelquest)
+				end
+			elseif game:getservice("players").localplayer.playergui.main.quest.visible == true then
+				checkquest()
+				if game:getservice("workspace").enemies:findfirstchild(ms) then
+					pcall(function()
+							for i, v in pairs(game:getservice("workspace").enemies:getchildren()) do
+								checkquest()  
+								if v.name == ms then
+									repeat wait()
+										spawn(function()
+											if game:getservice("workspace").enemies:findfirstchild(ms) and v.humanoid.health > 0 and v:findfirstchild("humanoid") then
+												if localplayer.playergui.main.quest.container.questtitle.title.text:find(namemon) then
+													chichdiem(v.humanoidrootpart.cframe * cframe.new(0,30,0))
+													poshee = v.humanoidrootpart.cframe
+													equipweapon(getgenv().tool)
+               click()
+													poshee = v.humanoidrootpart.cframe
+													v.humanoidrootpart.cancollide = false
+													v.humanoidrootpart.size = vector3.new(50, 50, 50)
+													statrmagnet = true
+												else
+													stoptween()
+													local args = {
+														[1] = "abandonquest"
+													 }
+													 game:getservice("replicatedstorage").remotes.commf_:invokeserver(unpack(args))
+												end  
+											else
+												checkquest() 
+												statrmagnet = false
+												repeat chichdiem(cframemon) wait() until getgenv().stoptween == true or not getgenv().autofarm or (game.players.localplayer.character.humanoidrootpart.position - cframemon.position).magnitude <= 8
+											end 
+										end)
+									until not v.parent or v.humanoid.health <= 0 or getgenv().autofarm == false or localplayer.playergui.main.quest.visible == false
+									checkquest() 
+									statrmagnet = false
+								end
+							end
+						end
+					)
+				else
+					checkquest()
+					statrmagnet = false
+					repeat chichdiem(cframemon) wait() until getgenv().stoptween == true or not getgenv().autofarm or (game.players.localplayer.character.humanoidrootpart.position - cframemon.position).magnitude <= 8
+				end 
+			end
+		else
+			checkquest()
+			if game:getservice("workspace").enemies:findfirstchild(ms) then
+				pcall(
+					function()
+						for i, v in pairs(game:getservice("workspace").enemies:getchildren()) do
+							checkquest() 
+							if v.name == ms then
+								repeat wait()
+									if game:getservice("workspace").enemies:findfirstchild(ms) and v.humanoid.health > 0 and v:findfirstchild("humanoid") then
+										chichdiem(v.humanoidrootpart.cframe * cframe.new(0,30,0))
+										equipweapon(getgenv().tool)
+click()
+										poshee = v.humanoidrootpart.cframe
+										v.humanoidrootpart.cancollide = false
+										v.humanoidrootpart.size = vector3.new(50, 50, 50)
+										statrmagnet = true
+									else
+										checkquest() 
+										statrmagnet = false
+										repeat chichdiem(cframemon) wait() until getgenv().stoptween == true or not getgenv().autofarm or (game.players.localplayer.character.humanoidrootpart.position - cframemon.position).magnitude <= 8
+									end 
+								until not v.parent or v.humanoid.health <= 0 or getgenv().autofarm == false
+								checkquest() 
+								statrmagnet = false
+							end
+						end
+					end
+				)
+			else
+				checkquest()
+				statrmagnet = false
+				repeat chichdiem(cframemon) wait() until getgenv().stoptween == true or not getgenv().autofarm or (game.players.localplayer.character.humanoidrootpart.position - cframemon.position).magnitude <= 8
+		     	end 
+		    end
+	    end
+	end)
+end
+
+
+local selecttoolweapona = autofarm:dropdown("selectweapon",lol,function(select)
+    getgenv().tool = select
+end)
+
+autofarm:button("refresh weapon", function()
+	selecttoolweapona:clear()
+	for i,v in pairs(game.players.localplayer.backpack:getchildren()) do  
+		if v:isa("tool") then
+			selecttoolweapona:add(v.name)
+		end
+	end
+	for i,v in pairs(game.players.localplayer.character:getchildren()) do  
+		if v:isa("tool") then
+			selecttoolweapona:add(v.name)
+		end
+	end
+end)
+
+    autofarm:toggle("lock mob",false,function(lm)
+  getgenv().lockmob=lm 
+end)
+spawn(function()
+while wait() do
+if getgenv().lockmob then
+pcall(function()
+       for i,v in pairs(game:getservice("workspace").enemies:getchildren()) do
+for x,y in pairs(game:getservice("workspace").enemies:getchildren()) do
+if v.name == ms then
+    if y.name == ms then
+   v.humanoidrootpart.size = vector3.new(60,60,60)
+   y.humanoidrootpart.size = vector3.new(60,60,60)
+   v.humanoidrootpart.anchored = true
+   v.humanoidrootpart.cancollide = false
+   y.humanoidrootpart.cancollide = false
+   v.humanoid.walkspeed = 0
+   y.humanoid.walkspeed = 0
+   v.humanoid.jumppower = 0
+   y.humanoid.jumppower = 0
+   if sethiddenproperty then
+     sethiddenproperty(game.players.localplayer, "simulationradius", math.huge)
+     end
+end
+end
+end
+end
+end)
+end
+end
+end)
+
+autofarm:toggle("bring mobs",false,function(bm)
+        getgenv().bringmobs=bm
+ end)
+spawn(function()
+    while wait() do
+        if getgenv().bringmobs  then
+            pcall(function()
+            checkquest()
+       for i,v in pairs(game:getservice("workspace").enemies:getchildren()) do
+for x,y in pairs(game:getservice("workspace").enemies:getchildren()) do
+if v.name == ms then
+    if y.name == ms then
+   v.humanoidrootpart.cframe = y.humanoidrootpart.cframe
+   v.humanoidrootpart.size = vector3.new(60,60,60)
+   y.humanoidrootpart.size = vector3.new(60,60,60)
+   v.humanoidrootpart.transparency = 1
+   v.humanoidrootpart.cancollide = false
+   y.humanoidrootpart.cancollide = false
+   v.humanoid.walkspeed = 0
+   y.humanoid.walkspeed = 0
+   v.humanoid.jumppower = 0
+   y.humanoid.jumppower = 0
+   if sethiddenproperty then
+     sethiddenproperty(game.players.localplayer, "simulationradius", math.huge)
+end
+end
+end
+end
+end
+end)
+end
+end
+end)
+autofarm:toggle("bring mob[lag]",false,function(br)
+getgenv().bringmob = br
+end)
+spawn(function()
+    while wait() do
+        if getgenv().bringmob  then
+            pcall(function()
+            checkquest()
+       for i,v in pairs(game:getservice("workspace").enemies:getchildren()) do
+for x,y in pairs(game:getservice("workspace").enemies:getchildren()) do
+if v.name == ms then
+    if y.name == ms then
+   bringlon = true
+mainmon = v.humanoidrootpart.cframe
+   v.humanoidrootpart.size = vector3.new(60,60,60)
+   y.humanoidrootpart.size = vector3.new(60,60,60)
+   v.humanoidrootpart.transparency = 1
+   v.humanoidrootpart.cancollide = false
+   y.humanoidrootpart.cancollide = false
+   v.humanoid.walkspeed = 0
+   y.humanoid.walkspeed = 0
+   v.humanoid.jumppower = 0
+   y.humanoid.jumppower = 0
+   if sethiddenproperty then
+     sethiddenproperty(game.players.localplayer, "simulationradius", math.huge)
+end
+end
+end
+end
+end
+end)
+end
+end
+end)
+spawn(function()
+		while wait() do
+			if bringlon and getgenv().bringmob then
+				for i,v in pairs(game.workspace.enemies:getchildren()) do
+					if bringlon  then
+						v.humanoidrootpart.cframe = mainmon
+						v.humanoidrootpart.cancollide = false
+					end
+				end
+			end
+		end
+	end)
+                      autofarm:toggle("fast attack",false,function(chim)
+  getgenv().fast = chim
+end)
+local concac
+if getupvalues then concac=getupvalues end
+if debug then 
+  if debug.getupvalues then concac=debug.getupvalues end
+end
+require(game.players.localplayer.playerscripts.combatframework.camerashaker).shake = function() end
+local combatframeworkr = concac(require(game:getservice("players").localplayer.playerscripts.combatframework))[2]
+	spawn(function()
+		game:getservice("runservice").stepped:connect(function()
+			pcall(function()
+				combatframeworkr.activecontroller.hitboxmagnitude = 55
+				
+					if getgenv().fast then
+						if game.players.localplayer.character:findfirstchild("black leg") then
+							combatframeworkr.activecontroller.timetonextattack = 3
+						elseif game.players.localplayer.character:findfirstchild("electro") then
+							combatframeworkr.activecontroller.timetonextattack = 2
+						else
+							combatframeworkr.activecontroller.timetonextattack = 0
+						end
+						combatframeworkr.activecontroller.attacking = false
+						combatframeworkr.activecontroller.increment = 3
+						combatframeworkr.activecontroller.blocking = false
+						combatframeworkr.activecontroller.timetonextblock = 0
+						game.players.localplayer.character.humanoid.sit = false	
+					end
+			end)
+		end)
+	end)
+	
+	spawn(function()
+		game:getservice("runservice").stepped:connect(function()
+			pcall(function()
+					if getgenv().fast then
+						click()
+					end
+			end)
+		end)
+	end)
+	local concac
+if getupvalues then concac=getupvalues end
+if debug then 
+  if debug.getupvalues then concac=debug.getupvalues end
+end
+require(game.players.localplayer.playerscripts.combatframework.camerashaker).shake = function() end
+local combatframework = concac(require(game:getservice("players").localplayer.playerscripts.combatframework))[2]
+local camerashakerk = require(game.replicatedstorage.util.camerashaker)
+spawn(function()
+    while true do
+        if getgenv().fast then
+            pcall(function()
+                camerashakerk:stop()
+                combatframework.activecontroller.attacking = false
+                combatframework.activecontroller.timetonextattack = 0
+                combatframework.activecontroller.increment = 3
+                combatframework.activecontroller.hitboxmagnitude = 100
+                combatframework.activecontroller.blocking = false
+                combatframework.activecontroller.timetonextblock = 0
+                combatframework.activecontroller.focusstart = 0
+                combatframework.activecontroller.humanoid.autorotate = true
+            end)
+        end
+        task.wait()
+    end
+end)
+coroutine.wrap(function()
+local concac
+if getupvalues then concac=getupvalues end
+if debug then 
+  if debug.getupvalues then concac=debug.getupvalues end
+end
+require(game.players.localplayer.playerscripts.combatframework.camerashaker).shake = function() end
+local v = concac(require(game:getservice("players").localplayer.playerscripts.combatframework))[2]
+local stopcamera = require(game.replicatedstorage.util.camerashaker)stopcamera:stop()
+    for v,v in pairs(getreg()) do
+        if typeof(v) == "function" and getfenv(v).script == game:getservice("players").localplayer.playerscripts.combatframework then
+             for v,v in pairs(debug.getupvalues(v)) do
+                if typeof(v) == "table" then
+                    spawn(function()
+                        game:getservice("runservice").renderstepped:connect(function()
+                            if getgenv().fast then
+                                 pcall(function()
+                                     v.activecontroller.timetonextattack = -(math.huge^math.huge^math.huge)
+                                     v.activecontroller.attacking = false
+                                     v.activecontroller.increment = 3
+                                     v.activecontroller.blocking = false   
+                                     v.activecontroller.hitboxmagnitude = 50
+    		                         v.activecontroller.humanoid.autorotate = true
+    	                      	     v.activecontroller.focusstart = 0
+    	                      	     v.activecontroller.currentattacktrack = 0
+                                     sethiddenproperty(game:getservice("players").localplayer, "simulationraxnerous", math.huge)
+ 
+                                 end)
+                             end
+                         end)
+                    end)
+                end
+            end
+        end
+    end
+end)(); 
